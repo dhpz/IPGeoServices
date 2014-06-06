@@ -42,23 +42,23 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
  * Portlet implementation class GeoipISOCodePortlet
  */
 public class IPGeoServicesPortlet extends MVCPortlet {
-    private static final Log logger = 
+    private static final Log logger =
     		LogFactoryUtil.getLog(IPGeoServicesPortlet.class);
 
 	public void processGeoipFiles(ActionRequest request, ActionResponse response) {
-    	UploadPortletRequest uploadRequest = 
+    	UploadPortletRequest uploadRequest =
     			PortalUtil.getUploadPortletRequest(request);
 
-    	File locationsFile = 
+    	File locationsFile =
     			uploadRequest.getFile(IPGeoServicesPortletConstants.ATTR_GEOIP_LOCATIONS_CSV);
-    	File blocksFile = 
+    	File blocksFile =
     			uploadRequest.getFile(IPGeoServicesPortletConstants.ATTR_GEOIP_BLOCKS_CSV);
 
-    	ThemeDisplay themeDisplay = 
+    	ThemeDisplay themeDisplay =
     	        (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
     	 ServiceContext serviceContext = new ServiceContext();
     	 serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
-    	
+
     	try {
 			InputStream locations = new FileInputStream(locationsFile);
 			InputStream blocks = new FileInputStream(blocksFile);

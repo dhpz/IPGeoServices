@@ -50,7 +50,8 @@ public class IPGeoServicesPortletConstants {
     public static final String RESPONSE_RECEIVER = "responseReceiver";
     public static final String RESPONSE_MESSAGE = "response";
     public static final String NOTIFICATION_MESSAGE = "notificationMessage";
-    
+
     public static final String USER_ID = "userId";
     public static final String PORTLET_ID = "ipgeoservices_WAR_IPGeoServicesportlet";
+    public static final String GEOIP_MESSAGE = "geoip-message";
 }

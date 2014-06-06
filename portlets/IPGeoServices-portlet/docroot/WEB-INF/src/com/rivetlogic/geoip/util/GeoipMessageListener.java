@@ -44,7 +44,6 @@ import com.rivetlogic.geoip.service.GeoipBlocksLocalServiceUtil;
 import com.rivetlogic.geoip.service.GeoipLocationsLocalServiceUtil;
 
 public class GeoipMessageListener implements MessageListener {
-
     private static final Log LOG =
             LogFactoryUtil.getLog(GeoipMessageListener.class);
 
@@ -64,20 +63,20 @@ public class GeoipMessageListener implements MessageListener {
 
     protected void doReceive(Message message) throws IOException {
         InputStream locations =
-		        (InputStream) message.get(
-		                IPGeoServicesPortletConstants.ATTR_GEOIP_LOCATIONS_CSV);
+                (InputStream) message.get(
+                        IPGeoServicesPortletConstants.ATTR_GEOIP_LOCATIONS_CSV);
         InputStream blocks =
-		        (InputStream) message.get(
-		                IPGeoServicesPortletConstants.ATTR_GEOIP_BLOCKS_CSV);
+                (InputStream) message.get(
+                        IPGeoServicesPortletConstants.ATTR_GEOIP_BLOCKS_CSV);
 
-		//getLocationFields(locations);
-		//getBlockFields(blocks);
+        //getLocationFields(locations);
+        //getBlockFields(blocks);
 
 		String responseDestination =
 		        message.getString(
 		                IPGeoServicesPortletConstants.RESPONSE_RECEIVER);
 		String userId = message.getString(IPGeoServicesPortletConstants.USER_ID);
-		
+
 		Message responseMessage = new Message();
 		responseMessage.put(
 		        IPGeoServicesPortletConstants.RESPONSE_MESSAGE,
@@ -91,19 +90,19 @@ public class GeoipMessageListener implements MessageListener {
         Long userId = message.getLong(IPGeoServicesPortletConstants.USER_ID);
         String type = IPGeoServicesPortletConstants.PORTLET_ID;
         Calendar cal = Calendar.getInstance();
-        
+
         JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-        jsonObject.put(IPGeoServicesPortletConstants.NOTIFICATION_MESSAGE, 
+        jsonObject.put(IPGeoServicesPortletConstants.NOTIFICATION_MESSAGE,
                 message.getString(IPGeoServicesPortletConstants.RESPONSE_MESSAGE));
-        
-        NotificationEvent notificationEvent = 
+
+        NotificationEvent notificationEvent =
                 new NotificationEvent(cal.getTimeInMillis(), type, jsonObject);
         try {
             UserNotificationEventLocalServiceUtil
                     .addUserNotificationEvent(userId, notificationEvent);
         } catch (PortalException e) {
             LOG.error(e);
-        } catch (SystemException e){
+        } catch (SystemException e) {
             LOG.error(e);
         }
 	}
@@ -160,12 +159,12 @@ public class GeoipMessageListener implements MessageListener {
                     IPGeoServicesPortletConstants.SEPARATOR);
 
             networkStartIP = GeoipUtility.getNetworkStartIP(values[
-                                 IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_NETWORKSTARTIP]);
+                    IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_NETWORKSTARTIP]);
 
             //IP can be translated to IPv4 format
             if (!networkStartIP.equals("")) {
                 int maskLenght = Integer.parseInt(values[
-                                     IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_NETWORKMASK]);
+                        IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_NETWORKMASK]);
                 IPv4 ip = new IPv4(
                         GeoipUtility.getIP_CIDR(
                                 networkStartIP, maskLenght));
@@ -173,11 +172,11 @@ public class GeoipMessageListener implements MessageListener {
                 long geonameId = 0L;
                 if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID].equals("")) {
             	    geonameId = Long.parseLong(values[
-            	                    IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID]);
+            	            IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID]);
                 } else {
             	    if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID].equals("")) {
             		    geonameId = Long.parseLong(values[
-            		                    IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID]);
+            		        IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID]);
             		}
             	}
 
