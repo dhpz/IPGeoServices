@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.rivetlogic.geoip.model.GeoipBlocks" />
+	<import class="com.rivetlogic.geoip.model.GeoipLocations" />
+	<class name="com.rivetlogic.geoip.model.impl.GeoipBlocksImpl" table="rivetlogic_geoip_GeoipBlocks">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="com.rivetlogic.geoip.service.persistence.GeoipBlocksPK">
+			<key-property name="geonameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="startIp" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="endIp" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.rivetlogic.geoip.model.impl.GeoipLocationsImpl" table="rivetlogic_geoip_GeoipLocations">
+		<cache usage="read-write" />
+		<id name="geonameId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="countryIsoCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

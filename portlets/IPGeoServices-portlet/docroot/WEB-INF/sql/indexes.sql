@@ -1,0 +1,1 @@
+create index IX_1EBA8CE7 on rivetlogic_geoip_GeoipBlocks (startIp, endIp);
