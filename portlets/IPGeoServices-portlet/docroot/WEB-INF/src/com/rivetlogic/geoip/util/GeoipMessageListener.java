@@ -69,8 +69,8 @@ public class GeoipMessageListener implements MessageListener {
                 (InputStream) message.get(
                         IPGeoServicesPortletConstants.ATTR_GEOIP_BLOCKS_CSV);
 
-        //getLocationFields(locations);
-        //getBlockFields(blocks);
+        getLocationFields(locations);
+        getBlockFields(blocks);
 
 		String responseDestination =
 		        message.getString(
@@ -122,7 +122,7 @@ public class GeoipMessageListener implements MessageListener {
         String[] values;
 
         br.readLine(); //read the first line and throw it away
-        /*while (((*/strLine = br.readLine();//) != null) && !strLine.isEmpty()) {
+        while (((strLine = br.readLine()) != null) && !strLine.isEmpty()) {
             location = new GeoipLocationsImpl();
             values = strLine.split(
                     IPGeoServicesPortletConstants.SEPARATOR);
@@ -138,7 +138,7 @@ public class GeoipMessageListener implements MessageListener {
 			} catch (SystemException e) {
 			    LOG.error(e);
 			}
-        //}
+        }
     }
 
     private void getBlockFields(InputStream inputStream) throws IOException {
@@ -153,7 +153,7 @@ public class GeoipMessageListener implements MessageListener {
         String networkStartIP;
 
         br.readLine(); //read the first line and throw it away
-        /*while (((*/strLine = br.readLine();//) != null) && !strLine.isEmpty()) {
+        while (((strLine = br.readLine()) != null) && !strLine.isEmpty()) {
             block = new GeoipBlocksImpl();
             values = strLine.split(
                     IPGeoServicesPortletConstants.SEPARATOR);
@@ -199,6 +199,6 @@ public class GeoipMessageListener implements MessageListener {
 					}
             	}
             }
-        //}
+        }
     }
 }
