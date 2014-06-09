@@ -14,5 +14,6 @@ locations and blocks databases.
 ## Server configuration
 
 Since the blocks csv file is larger than 100MB it will be necessary to up the 
-maximun file upload size. Go to Control Panel -> Server Administration -> File Uploads, 
-and modify the "Overall Maximum File Size" property.
+maximun file upload size. 
+Go to Control Panel -> Server Administration -> File Uploads, and modify the 
+"Overall Maximum File Size" property.
