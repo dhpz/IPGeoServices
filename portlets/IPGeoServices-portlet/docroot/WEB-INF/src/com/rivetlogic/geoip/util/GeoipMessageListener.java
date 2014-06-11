@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.rivetlogic.geoip.model.GeoipBlocks;
 import com.rivetlogic.geoip.model.GeoipLocations;
@@ -162,32 +163,32 @@ public class GeoipMessageListener implements MessageListener {
                     IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_NETWORKSTARTIP]);
 
             //IP can be translated to IPv4 format
-            if (!networkStartIP.equals("")) {
+            if (!networkStartIP.equals(StringPool.BLANK)) {
                 int maskLenght = Integer.parseInt(values[
                         IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_NETWORKMASK]);
                 IPv4 ip = new IPv4(
                         GeoipUtility.getIP_CIDR(
                                 networkStartIP, maskLenght));
 
-                long geonameId = 0L;
-                if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID].equals("")) {
+                long geonameId = IPGeoServicesPortletConstants.DEFAULT_ID;
+                if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID].equals(StringPool.BLANK)) {
             	    geonameId = Long.parseLong(values[
             	            IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID]);
                 } else {
-            	    if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID].equals("")) {
+            	    if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID].equals(StringPool.BLANK)) {
             		    geonameId = Long.parseLong(values[
             		        IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID]);
             		}
             	}
 
             	//There was a geonameId associated to the ip
-                if (geonameId != 0L) {
+                if (geonameId != IPGeoServicesPortletConstants.DEFAULT_ID) {
 		            block.setGeonameId(geonameId);
 
 		            String addressRange = ip.getHostAddressRange();
 
 		            //firstIP + " - " + lastIP
-		            String[] startEnd = addressRange.split(" - ");
+		            String[] startEnd = addressRange.split(IPGeoServicesPortletConstants.RANGE_SEPARATOR);
 		            block.setStartIp(
 		                    GeoipUtility.ipToLong(startEnd[0]));
 		            block.setEndIp(GeoipUtility.ipToLong(startEnd[1]));

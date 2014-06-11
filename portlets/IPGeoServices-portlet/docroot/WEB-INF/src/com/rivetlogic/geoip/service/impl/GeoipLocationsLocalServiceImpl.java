@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.rivetlogic.geoip.model.GeoipLocations;
 import com.rivetlogic.geoip.portlet.IPGeoServicesPortletConstants;
-import com.rivetlogic.geoip.service.GeoipBlocksLocalServiceUtil;
 import com.rivetlogic.geoip.service.base.GeoipLocationsLocalServiceBaseImpl;
 import com.rivetlogic.geoip.util.GeoipUtility;
 
@@ -72,13 +72,13 @@ public class GeoipLocationsLocalServiceImpl
 	public void truncateTable(){
 		Session session = geoipLocationsPersistence.openSession();
 		Query query =
-				session.createSQLQuery("truncate table "
+				session.createSQLQuery(IPGeoServicesPortletConstants.SQL_TRUNCATE
 		                + IPGeoServicesPortletConstants.LOCATIONS_TABLE);
 		query.executeUpdate();
 	}
 
 	public String getCountryISO(long geonameId){
-		String countryISO = "";
+		String countryISO = StringPool.BLANK;
 		try {
 			GeoipLocations location =
 					geoipLocationsPersistence.fetchByPrimaryKey(geonameId);
@@ -92,7 +92,7 @@ public class GeoipLocationsLocalServiceImpl
 
 	public String getLocation(String IP){
 		long ip = GeoipUtility.ipToLong(IP);
-        long geonameId = GeoipBlocksLocalServiceUtil.getGeonameId(ip, ip);
+        long geonameId = geoipBlocksLocalService.getGeonameId(ip, ip);
 
         return getCountryISO(geonameId);
     }

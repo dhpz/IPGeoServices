@@ -22,6 +22,7 @@ import java.net.UnknownHostException;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.rivetlogic.geoip.portlet.IPGeoServicesPortletConstants;
 
 public class GeoipUtility {
@@ -30,7 +31,7 @@ public class GeoipUtility {
 
 	public static long ipToLong(String ip) {
 		InetAddress inetIp;
-		long result = 0;
+		long result = IPGeoServicesPortletConstants.DEFAULT_ID;
 
 		try {
 			inetIp = InetAddress.getByName(ip);
@@ -55,21 +56,21 @@ public class GeoipUtility {
 
 	//Get IP in IPv4 format
     public static String getNetworkStartIP(String IPv6) {
-	    String IPv4 = "";
+	    String IPv4 = StringPool.BLANK;
 
 		if (IPv6.contains(IPGeoServicesPortletConstants.IPV6_MAP)) {
-            IPv4 = IPv6.replace(IPGeoServicesPortletConstants.IPV6_MAP, "");
+            IPv4 = IPv6.replace(IPGeoServicesPortletConstants.IPV6_MAP, StringPool.BLANK);
 		}
 		return IPv4;
 	}
 
 	//IP in CIDR format like: 10.1.0.25/16
 	public static String getIP_CIDR(String ip, int maskLenght) {
-		return ip + "/" + getSubnetMask(maskLenght);
+		return ip + StringPool.FORWARD_SLASH + getSubnetMask(maskLenght);
 	}
 
 	public static long getHostIP() {
-		long ip = 0L;
+		long ip = IPGeoServicesPortletConstants.DEFAULT_ID;
 
 		return ip;
 	}

@@ -5,6 +5,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.rivetlogic.geoip.portlet.IPGeoServicesPortletConstants;
@@ -36,6 +37,6 @@ public class GeoipNotificationHandler extends BaseUserNotificationHandler {
     @Override
     protected String getLink(UserNotificationEvent userNotificationEvent,
             ServiceContext serviceContext) throws Exception {
-        return "/";
+        return StringPool.FORWARD_SLASH;
     }
 }

@@ -17,6 +17,10 @@
 
 package com.rivetlogic.geoip.portlet;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.rivetlogic.geoip.model.impl.GeoipBlocksModelImpl;
+import com.rivetlogic.geoip.model.impl.GeoipLocationsModelImpl;
+
 public class IPGeoServicesPortletConstants {
     public static final String ATTR_GEOIP_LOCATIONS_CSV = "locationsCsv";
     public static final String ATTR_GEOIP_BLOCKS_CSV = "blocksCsv";
@@ -28,15 +32,18 @@ public class IPGeoServicesPortletConstants {
     public static final String UPLOAD_SUCCESS_KEY = "geoip-upload-success-key";
     public static final String SUCCESS_PROCESSING_CSV_FILES = "geoip-process-csv-success";
 
-    public static final String LOCATIONS_TABLE = "rivetlogic_geoip_GeoipLocations";
-    public static final String BLOCKS_TABLE = "rivetlogic_geoip_GeoipBlocks";
+    public static final String LOCATIONS_TABLE = GeoipLocationsModelImpl.TABLE_NAME;// "rivetlogic_geoip_GeoipLocations";
+    public static final String BLOCKS_TABLE = GeoipBlocksModelImpl.TABLE_NAME;//"rivetlogic_geoip_GeoipBlocks";
 
     public static final String IPV6_MAP = "::ffff:";	//IPv4 address that was mapped to IPv6
     public static final int BIT_DIFFERENCE = 96;		//Difference between IPv4 and IPv6
     public static final int LAST_EIGHT_BITS = 0xff;
     public static final int OCTET_NUMBER = 8;
+    public static final Long DEFAULT_ID = 0L; 
 
-    public static final String SEPARATOR = ",";
+    public static final String SEPARATOR = StringPool.COMMA;
+    public static final String RANGE_SEPARATOR = " - ";
+    public static final String SQL_TRUNCATE = " truncate table ";
 
     public static final int LOCATIONS_FILE_INDEX_GEONAMEID = 0;
     public static final int LOCATIONS_FILE_INDEX_COUNTRYISOCODE = 3;

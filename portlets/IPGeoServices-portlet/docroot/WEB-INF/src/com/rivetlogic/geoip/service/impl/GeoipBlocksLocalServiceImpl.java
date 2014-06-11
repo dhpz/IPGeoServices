@@ -18,13 +18,12 @@
 
 package com.rivetlogic.geoip.service.impl;
 
-import java.util.List;
-
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.rivetlogic.geoip.NoSuchGeoipBlocksException;
 import com.rivetlogic.geoip.model.GeoipBlocks;
 import com.rivetlogic.geoip.portlet.IPGeoServicesPortletConstants;
 import com.rivetlogic.geoip.service.base.GeoipBlocksLocalServiceBaseImpl;
@@ -77,22 +76,26 @@ public class GeoipBlocksLocalServiceImpl extends GeoipBlocksLocalServiceBaseImpl
 	public void truncateTable(){
 		Session session = geoipBlocksPersistence.openSession();
 		Query query =
-				session.createSQLQuery("truncate table "
+				session.createSQLQuery(IPGeoServicesPortletConstants.SQL_TRUNCATE
 		+ IPGeoServicesPortletConstants.BLOCKS_TABLE);
 		query.executeUpdate();
 	}
 
 	public long getGeonameId(long startId, long endId){
-		long geonameId = 0L;
-
+		long geonameId = IPGeoServicesPortletConstants.DEFAULT_ID;
+		GeoipBlocks geoIpBlock;
 		try {
-			List<GeoipBlocks> blocks =
-					geoipBlocksPersistence.findByStartEndIp(startId, endId);
-			geonameId = blocks.get(0).getGeonameId();
+			geoIpBlock = geoipBlocksPersistence.findByStartEndIp_First(startId, endId, null);
+			if(geoIpBlock != null){
+				geonameId = geoIpBlock.getGeonameId();
+			}
+			
+		} catch (NoSuchGeoipBlocksException e) {
+			LOG.error(e);
 		} catch (SystemException e) {
 			LOG.error(e);
 		}
-
+		
 		return geonameId;
 	}
 }

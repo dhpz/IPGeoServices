@@ -17,6 +17,7 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
+		<resource-bundle>content/Language.properties</resource-bundle>
 		<portlet-info>
 			<title>IP Geo Services Portlet</title>
 			<short-title>IP Geo Services Portlet</short-title>
