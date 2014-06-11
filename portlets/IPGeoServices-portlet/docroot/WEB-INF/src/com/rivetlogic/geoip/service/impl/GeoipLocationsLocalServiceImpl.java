@@ -82,7 +82,10 @@ public class GeoipLocationsLocalServiceImpl
 		try {
 			GeoipLocations location =
 					geoipLocationsPersistence.fetchByPrimaryKey(geonameId);
-			countryISO = location.getCountryIsoCode();
+			if(location != null){
+				countryISO = location.getCountryIsoCode();
+			}
+			
 		} catch (SystemException e) {
 			LOG.error(e);
 		}
