@@ -127,18 +127,20 @@ public class GeoipMessageListener implements MessageListener {
             location = new GeoipLocationsImpl();
             values = strLine.split(
                     IPGeoServicesPortletConstants.SEPARATOR);
-
-            location.setGeonameId(Long.parseLong(values[
-                    IPGeoServicesPortletConstants.LOCATIONS_FILE_INDEX_GEONAMEID]));
-            location.setCountryIsoCode(values[
-                    IPGeoServicesPortletConstants.LOCATIONS_FILE_INDEX_COUNTRYISOCODE]
-                            .trim());
-
-            try {
-                GeoipLocationsLocalServiceUtil.addGeoipLocations(location);
-			} catch (SystemException e) {
-			    LOG.error(e);
-			}
+            
+            //In some weird cases there is a geonameId without country ISO
+            if(values.length > IPGeoServicesPortletConstants.LOCATIONS_FILE_INDEX_COUNTRYISOCODE) {
+                location.setGeonameId(Long.parseLong(values[
+                        IPGeoServicesPortletConstants.LOCATIONS_FILE_INDEX_GEONAMEID]));
+                location.setCountryIsoCode(values[
+                        IPGeoServicesPortletConstants.LOCATIONS_FILE_INDEX_COUNTRYISOCODE]
+                                .trim());
+                try {
+                    GeoipLocationsLocalServiceUtil.addGeoipLocations(location);
+                } catch (SystemException e) {
+                    LOG.error(e);
+                }
+            }
         }
     }
 
@@ -166,39 +168,44 @@ public class GeoipMessageListener implements MessageListener {
             if (!networkStartIP.equals(StringPool.BLANK)) {
                 int maskLenght = Integer.parseInt(values[
                         IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_NETWORKMASK]);
-                IPv4 ip = new IPv4(
-                        GeoipUtility.getIP_CIDR(
-                                networkStartIP, maskLenght));
+                
+                if(maskLenght - IPGeoServicesPortletConstants.BIT_DIFFERENCE 
+                        > IPGeoServicesPortletConstants.LOWER_VALID_NETMASK_LENGHT){
+                    IPv4 ip = new IPv4(
+                            GeoipUtility.getIP_CIDR(
+                                    networkStartIP, maskLenght));
 
-                long geonameId = IPGeoServicesPortletConstants.DEFAULT_ID;
-                if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID].equals(StringPool.BLANK)) {
-            	    geonameId = Long.parseLong(values[
-            	            IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID]);
-                } else {
-            	    if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID].equals(StringPool.BLANK)) {
-            		    geonameId = Long.parseLong(values[
-            		        IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID]);
-            		}
-            	}
+                    long geonameId = IPGeoServicesPortletConstants.DEFAULT_ID;;
+                    if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID].equals(StringPool.BLANK)) {
+                        geonameId = Long.parseLong(values[
+                                IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_GEONAMEID]);
+                    } else {
+                        if (!values[IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID].equals(StringPool.BLANK)) {
+                            geonameId = Long.parseLong(values[
+                                    IPGeoServicesPortletConstants.BLOCKS_FILE_INDEX_REGISTERDCOUNTRY_GEONAMEID]);
+                        }
+                    }
 
-            	//There was a geonameId associated to the ip
-                if (geonameId != IPGeoServicesPortletConstants.DEFAULT_ID) {
-		            block.setGeonameId(geonameId);
+                    //There was a geonameId associated to the ip
+                    if (geonameId != IPGeoServicesPortletConstants.DEFAULT_ID) {
+                        block.setGeonameId(geonameId);
 
-		            String addressRange = ip.getHostAddressRange();
+                        String addressRange = ip.getHostAddressRange();
 
-		            //firstIP + " - " + lastIP
-		            String[] startEnd = addressRange.split(IPGeoServicesPortletConstants.RANGE_SEPARATOR);
-		            block.setStartIp(
-		                    GeoipUtility.ipToLong(startEnd[0]));
-		            block.setEndIp(GeoipUtility.ipToLong(startEnd[1]));
-	            	try {
-					    GeoipBlocksLocalServiceUtil
-					            .addGeoipBlocks(block);
-					} catch (SystemException e) {
-					    LOG.error(e);
-					}
-            	}
+                        //firstIP + " - " + lastIP
+                        String[] startEnd = 
+                                addressRange.split(IPGeoServicesPortletConstants.RANGE_SEPARATOR);
+                        block.setStartIp(
+                                GeoipUtility.ipToLong(startEnd[0]));
+                        block.setEndIp(GeoipUtility.ipToLong(startEnd[1]));
+                        try {
+                            GeoipBlocksLocalServiceUtil
+                                    .addGeoipBlocks(block);
+                        } catch (SystemException e) {
+                            LOG.error(e);
+                        }
+                    }
+                }
             }
         }
     }

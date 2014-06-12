@@ -39,6 +39,7 @@ public class IPGeoServicesPortletConstants {
     public static final int BIT_DIFFERENCE = 96;		//Difference between IPv4 and IPv6
     public static final int LAST_EIGHT_BITS = 0xff;
     public static final int OCTET_NUMBER = 8;
+    public static final int LOWER_VALID_NETMASK_LENGHT = 8;
     public static final Long DEFAULT_ID = 0L; 
 
     public static final String SEPARATOR = StringPool.COMMA;
