@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+<service-builder package-path="com.rivetlogic.geo">
+    <author>charles.rodriguez</author>
+	<namespace>rivetlogic_geo</namespace>
+
+    <entity name="GeoLocations" local-service="true" remote-service="true">
+        <!-- PK fields -->
+        <column name="geonameId" type="long" primary="true" />
+        <!-- Other fields -->
+        <column name="countryIsoCode" type="String" />
+    </entity>
+    
+    <entity name="GeoBlocks" local-service="true" remote-service="false">
+    	<!-- PK fields -->
+        <column name="geonameId" type="long" primary="true" />
+        <column name="startIp" type="long" primary="true" />
+        <!-- Other fields -->
+        <column name="endIp" type="long" />
+        <!-- Finder methods -->
+        <finder name="StartEndIp" return-type="Collection">
+            <finder-column name="startIp" comparator="&lt;" />
+            <finder-column name="endIp" comparator="&gt;" />
+        </finder>
+    </entity>
+</service-builder>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.rivetlogic.geo.model.impl.GeoBlocksModelImpl">
+		<id-class class="com.rivetlogic.geo.service.persistence.GeoBlocksPK" />
+		<attributes>
+			<id name="geonameId" />
+			<id name="startIp" />
+			<basic name="endIp" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.rivetlogic.geo.model.impl.GeoLocationsModelImpl">
+		<attributes>
+			<id name="geonameId" />
+			<basic name="countryIsoCode" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.rivetlogic.geo.model.impl.GeoBlocksImpl" name="GeoBlocks">
+		<table name="rivetlogic_geo_GeoBlocks" />
+		<attributes />
+	</entity>
+	<entity class="com.rivetlogic.geo.model.impl.GeoLocationsImpl" name="GeoLocations">
+		<table name="rivetlogic_geo_GeoLocations" />
+		<attributes />
+	</entity>
+</entity-mappings>

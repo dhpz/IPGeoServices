@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.rivetlogic.geo.model.GeoBlocks">
+		<field name="geonameId" type="long" />
+		<field name="startIp" type="long" />
+		<field name="endIp" type="long" />
+	</model>
+	<model name="com.rivetlogic.geo.model.GeoLocations">
+		<field name="geonameId" type="long" />
+		<field name="countryIsoCode" type="String" />
+	</model>
+</model-hints>

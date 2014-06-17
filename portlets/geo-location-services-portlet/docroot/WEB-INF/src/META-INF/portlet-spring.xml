@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.rivetlogic.geo.service.GeoBlocksLocalService" class="com.rivetlogic.geo.service.impl.GeoBlocksLocalServiceImpl" />
+	<bean id="com.rivetlogic.geo.service.persistence.GeoBlocksPersistence" class="com.rivetlogic.geo.service.persistence.GeoBlocksPersistenceImpl" parent="basePersistence" />
+	<bean id="com.rivetlogic.geo.service.GeoLocationsLocalService" class="com.rivetlogic.geo.service.impl.GeoLocationsLocalServiceImpl" />
+	<bean id="com.rivetlogic.geo.service.GeoLocationsService" class="com.rivetlogic.geo.service.impl.GeoLocationsServiceImpl" />
+	<bean id="com.rivetlogic.geo.service.persistence.GeoLocationsPersistence" class="com.rivetlogic.geo.service.persistence.GeoLocationsPersistenceImpl" parent="basePersistence" />
+</beans>

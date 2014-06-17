@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="Plugin_rivetlogic_geo_GeoLocationsService" provider="java:RPC" style="rpc" use="encoded">
+		<operation xmlns:operNS="urn:http.service.geo.rivetlogic.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getLocation" qname="operNS:getLocation" returnQName="getLocationReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="IP" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getLocation" />
+		<parameter name="className" value="com.rivetlogic.geo.service.http.GeoLocationsServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="GeoLocationsServiceSoap" />
+		<parameter name="wsdlServiceElement" value="GeoLocationsServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_rivetlogic_geo_GeoLocationsService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.geo.rivetlogic.com" />
+	</service>
+</deployment>

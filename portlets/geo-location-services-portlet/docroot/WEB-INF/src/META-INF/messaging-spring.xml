@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<beans
+    default-destroy-method="destroy"
+    default-init-method="afterPropertiesSet"
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+
+    <!-- Listeners -->
+    <bean id="messageListener.geo_listener"
+        class="com.rivetlogic.geo.util.GeoMessageListener" />
+
+    <!-- Destinations -->
+    <bean id="destination.geo" class="com.liferay.portal.kernel.messaging.SerialDestination">
+        <property name="name" value="geo/files" />
+    </bean>
+    <bean id="destination.geo.response" class="com.liferay.portal.kernel.messaging.SynchronousDestination">
+        <property name="name" value="geo/files/response" />
+    </bean>
+
+    <!-- Configurator -->
+    <bean id="messagingConfigurator"
+        class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator">
+        <property name="messageListeners">
+            <map key-type="java.lang.String" value-type="java.util.List">
+                <entry key="geo/files">
+                    <list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+                        <ref bean="messageListener.geo_listener" />
+                    </list>
+                </entry>
+                <entry key="geo/files/response">
+                    <list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+                        <ref bean="messageListener.geo_listener" />
+                    </list>
+                </entry>
+            </map>
+        </property>
+        <property name="destinations">
+            <list>
+                <ref bean="destination.geo"/>
+                <ref bean="destination.geo.response"/>
+            </list>
+        </property>
+    </bean>
+</beans>

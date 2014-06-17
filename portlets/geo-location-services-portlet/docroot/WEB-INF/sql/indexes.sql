@@ -1,0 +1,1 @@
+create index IX_6201EB59 on rivetlogic_geo_GeoBlocks (startIp, endIp);
